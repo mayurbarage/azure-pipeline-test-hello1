@@ -16,6 +16,12 @@ steps:
     python --version
   displayName: 'Python version check script'
 
+# Logs in securely using the pipeline secret variable
+- script: |
+    echo Logging into Docker Hub...
+    echo $(DOCKER_PASSWORD) | docker login -u mayurbarage --password-stdin
+  displayName: 'Docker Hub Login Script'
+
 - script: |
     echo Building docker image from dockerfile
     docker build -t mayurbarage/hellopipeline:latest .
@@ -23,12 +29,12 @@ steps:
 
 - script: |
     echo Pushing image
-    docker push mayurbarage/hellopipeline
+    docker push mayurbarage/hellopipeline:latest
   displayName: 'Docker push stage'
 
 - script: |
     echo Creating container
-    docker run mayurbarage/hellopipeline
+    docker run --name test-container mayurbarage/hellopipeline:latest
   displayName: 'Creating a container'
 
 - script: |
@@ -37,4 +43,3 @@ steps:
     docker container ls
     docker ps -a
   displayName: 'Docker images and container script'
-
