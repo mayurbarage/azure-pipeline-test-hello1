@@ -18,7 +18,7 @@ steps:
 
 - script: |
     echo Building docker image from dockerfile
-    docker build -t mayurbarage/hellopipeline:latest
+    docker build -t mayurbarage/hellopipeline:latest .
   displayName: 'Build docker script'
 
 - script: |
