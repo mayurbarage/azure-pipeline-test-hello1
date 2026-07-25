@@ -6,10 +6,12 @@ pool:
   vmImage: 'ubuntu-24.04'
 
 steps:
-- script: echo Hello, Azure Pipelines!
-  displayName: 'Run a one-line script'
+- script: |
+    echo Checking docker version
+    docker --version
+  displayName: 'Docker version check script'
 
 - script: |
-    python --version
     echo Checking python version
+    python --version
   displayName: 'Python version check script'
