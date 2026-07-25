@@ -15,3 +15,26 @@ steps:
     echo Checking python version
     python --version
   displayName: 'Python version check script'
+
+- script: |
+    echo Building docker image from dockerfile
+    docker build -t mayurbarage/hellopipeline:latest
+  displayName: 'Build docker script'
+
+- script: |
+    echo Pushing image
+    docker push mayurbarage/hellopipeline
+  displayName: 'Docker push stage'
+
+- script: |
+    echo Creating container
+    docker run mayurbarage/hellopipeline
+  displayName: 'Creating a container'
+
+- script: |
+    echo Checking container and images
+    docker images
+    docker container ls
+    docker ps -a
+  displayName: 'Docker images and container script'
+
