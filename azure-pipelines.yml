@@ -1,45 +1,14 @@
-# Basic pipeline example
 trigger:
 - main
 
 pool:
-  vmImage: 'ubuntu-24.04'
+  name: Default
+  demands:
+  - Agent.Name -equals Mayurs-MacBook-Air
 
 steps:
-- script: |
-    echo Checking docker version
-    docker --version
-  displayName: 'Docker version check script'
+- script: echo "Hello from Self-Hosted Mac Agent"
+  displayName: 'Hello World'
 
-- script: |
-    echo Checking python version
-    python --version
-  displayName: 'Python version check script'
-
-# Logs in securely using the pipeline secret variable
-- script: |
-    echo Logging into Docker Hub...
-    echo $(DOCKER_PASSWORD) | docker login -u mayurbarage --password-stdin
-  displayName: 'Docker Hub Login Script'
-
-- script: |
-    echo Building docker image from dockerfile
-    docker build -t mayurbarage/hellopipeline:latest .
-  displayName: 'Build docker script'
-
-- script: |
-    echo Pushing image
-    docker push mayurbarage/hellopipeline:latest
-  displayName: 'Docker push stage'
-
-- script: |
-    echo Creating container
-    docker run --name test-container mayurbarage/hellopipeline:latest
-  displayName: 'Creating a container'
-
-- script: |
-    echo Checking container and images
-    docker images
-    docker container ls
-    docker ps -a
-  displayName: 'Docker images and container script'
+- script: hostname
+  displayName: 'Check Hostname'
